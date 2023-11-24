@@ -9,6 +9,31 @@ services:
       MSSQL_PID: "Express"
     ports:
       - "1433:1433"
+    networks:
+      - aide-financiere-network
+
+  dev-aide-financiere-api:
+    image: dev-aide-financiere-api:latest
+    container_name: dev-aide-financiere-api
+    build:
+      context: ../INF37607.AideFinanciere.API/
+      dockerfile: ../INF37607.AideFinanciere.CI/docker/development/api/Dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ../INF37607.AideFinanciere.API/:/app
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ConnectionStrings__DefaultConnection=Server=ms-sql-server;Initial Catalog=EAISolutionFrontEndDB;User ID=sa;Password=Pa55w0rd2021;integrated security=false;TrustServerCertificate=True;
+      - AppSettings__Token=sdkhjdasdjkxdjk,hsgfyjhwik2378ry73eo734&*634637896%^5347hdkjdhcnslwuefh
+    depends_on:
+      - ms-sql-server
+    networks:
+      - aide-financiere-network
 
   dev-aide-financiere-ui:
     image: node:alpine
@@ -26,4 +51,13 @@ services:
     environment:
       HOST: 0.0.0.0
       PORT: 3001
-      NUXT_PUBLIC_API_BASE: "https://localhost:6001/api/"
+      NUXT_PUBLIC_API_BASE: "https://localhost/api/"
+    depends_on:
+      - dev-aide-financiere-api
+    networks:
+      aide-financiere-network:
+        aliases:
+          - aide-financiere-ui.local
+
+networks:
+  aide-financiere-network:
