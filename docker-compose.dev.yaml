@@ -1,0 +1,29 @@
+version: "3"
+services:
+  ms-sql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: ms-sql-server
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Pa55w0rd2021"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+
+  dev-aide-financiere-ui:
+    image: node:alpine
+    container_name: dev-aide-financiere-ui
+    restart: always
+    working_dir: /usr/src/app
+    ports:
+      - "3001:3001"
+    command: [sh, -c, "npm run dev"]
+    volumes:
+      - "../INF37607.AideFinanciere.UI/:/usr/src/app/"
+      - "../INF37607.AideFinanciere.UI/src/:/usr/src/app/src/"
+      - "../INF37607.AideFinanciere.UI/node_modules/:/usr/src/app/node_modules/"
+    tty: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3001
+      NUXT_PUBLIC_API_BASE: "https://localhost:6001/api/"

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  aide-financiere-ui:
+    build:
+      dockerfile: ./docker/production/ui/Dockerfile
+      context: ../INF37607.AideFinanciere.UI/
+    image: aide-financiere-ui:latest
+    container_name: aide-financiere-ui
+    command: [sh, -c, "npm run start"]
+    restart: always
+    working_dir: /usr/src/app
+    ports:
+      - "3000:3000"
+    tty: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      NUXT_PUBLIC_API_BASE: "http://localhost:6001/api/"

@@ -1,0 +1,1 @@
+docker compose -f ./docker-compose.prod.yaml -f ./docker-compose.dev.yaml down --remove-orphans

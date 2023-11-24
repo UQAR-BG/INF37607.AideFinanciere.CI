@@ -1,0 +1,1 @@
+docker compose -f ./ci/docker-compose.prod.yaml up --build -d
