@@ -1,0 +1,11 @@
+version: "3"
+services:
+  standalone-db:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    container_name: standalone-db
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Pa55w0rd2021"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"

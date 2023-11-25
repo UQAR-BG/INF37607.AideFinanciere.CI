@@ -8,4 +8,4 @@ EXPOSE 443
 RUN dotnet dev-certs https --clean
 RUN dotnet dev-certs https -t
 
-ENTRYPOINT [ "dotnet", "watch", "--project", "EAISolutionFrontEnd.WebAPI", "run", "--urls", "https://*:443" ]
+ENTRYPOINT [ "dotnet", "watch", "--project", "INF37607.AideFinanciere.WebAPI", "run", "--urls", "https://*:443" ]

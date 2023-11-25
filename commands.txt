@@ -1,0 +1,7 @@
+Pour lancer la BD seule:
+
+docker compose -f ./docker-compose.db.yaml up --build
+
+Pour lancer le stack en dev:
+
+docker compose -f ./docker-compose.dev.yaml up
